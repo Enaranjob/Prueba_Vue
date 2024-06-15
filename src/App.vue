@@ -1,49 +1,28 @@
-<script setup>
-import SearchInput from './components/SearchInput.vue';
-import WeatherCard from './components/WeatherCard.vue';
-import { ref } from 'vue';
-
-const places = ref([]);
-
-const addPlace = (data) => {
-  if (data && data.location && data.current) {
-    places.value.push(data);
-  } else {
-    console.error("Invalid place data:", data);
-  }
-};
-
-const deletePlace = (name) => {
-  places.value = places.value.filter(p => p.location.name !== name);
-};
-</script>
-
 <template>
-  <main>
-    <!-- Date -->
-    <div class="text-center mb-6">
-      {{ new Date().toLocaleDateString('en-us', { 
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }) }}
-    </div>
+  <div>
+    <HeaderA />
 
-    <!-- Search -->
-    <div>
-      <SearchInput @place-data="addPlace" />
-    </div>
+    <main>
+      <router-view></router-view>
+    </main>
 
-    <!-- Weather Cards -->
-    <div class="grid grid-cols-2 gap-4">
-      <div v-for="(place, idx) in places" :key="idx">
-        <WeatherCard :place="place" @delete-place="deletePlace" />
-      </div>
-    </div>
-  </main>
+    <FooterA />
+  </div>
 </template>
 
-<style scoped>
-/* Agrega aquí tus estilos si es necesario */
+<script setup>
+import HeaderA from './components/HeaderA.vue';
+import FooterA from './components/FooterA.vue';
+</script>
+
+<style>
+/* Estilos globales */
+body {
+  background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
 </style>
